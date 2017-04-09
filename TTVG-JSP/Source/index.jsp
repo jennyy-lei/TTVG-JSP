@@ -7,17 +7,18 @@
 	<head>
 		<link rel = "stylesheet" type = "text/css" href = "style.css">
 		<script>
-			var display = true
-
+			function init_menu(item, status) {
+				var div = document.getElementById(item);
+				div.style.display = status;
+			}	
+			
 			function close_menu(item) {
-				alert("");
-				var div = document.getElementById('div1');
-				if(display) {
-					div.style.display = "none";
-					display = false;
-				} else {
+				var div = document.getElementById(item);
+//				alert("" + div.style.display);
+				if(div.style.display == "none") {
 					div.style.display = "block";
-					display = true;
+				} else {
+					div.style.display = "none";
 				}
 			}	
 			
@@ -44,40 +45,91 @@
 				<h1>TTVG</h1>
 				<p><%=p.getProperty("title")%></p>
 			</div>
-			<form>
-				<button type="submit" id="btnLanguage" name="btnLanguage" value="<%=newLocaleStr%>" onclick='toggle_language()'><%=p.getProperty("button.language")%></button>
-			</form>
+			<div id = "site-menu">
+				<form action="index.jsp" method="POST">
+					<button type="submit" id="btnLanguage" name="btnLanguage" value="<%=newLocaleStr%>" onclick='toggle_language()'><%=p.getProperty("button.language")%></button>
+				</form>
+			</div>
 		</div>
 		<div id="body-container">
 			<div id = "sidebar">
 				<ul>
-					<li onclick='load_page("home.html"); return false;'><%=p.getProperty("home")%></li>
-					<li onclick="close_menu(this); return false;" class="parent-list">中文学校</li>
-						<div id="div1">
+<%
+    String[] menuList = p.getProperty("menu.submenu").split("\\|");
+	for (String menu : menuList){
+		String menuName	= "menu." + menu;
+		String menuUrl 	= p.getProperty(menuName + ".url");
+%>
+					<a href="">
+<%
+		if ( menuUrl != null && menuUrl.length() >= 0 ){
+%>
+					<li onclick='load_page("<%=menuUrl%>"); return false;' class="parent-list">
+<%
+		} else {
+%>
+					<li onclick='close_menu("<%=menuName%>"); return false;' class="parent-list">
+<%
+		}
+%>
+					<%=p.getProperty(menuName + ".title")%></li></href>
+		
+<%
+		String submenu 	= p.getProperty(menuName + ".submenu");
+		if ( submenu != null && submenu.length() > 0 ){
+%>
+						<div id="<%=menuName%>">
 
-							<a href=""><li class="child-list">教学</li></a>
 <%
-    String[] childList = new String[]{"千字比赛", "小学", "初中", "高中"};
-	for (String child : childList){
+			String[] submenuList = submenu.split("\\|");
+			for (String submenuItem : submenuList){
+				String submenuName	= menuName + "." + submenuItem;
+				String submenuUrl 	= p.getProperty(submenuName + ".url");
 %>
-								<a href=""><li class="child-list indent-2"><%=child%></li></a>
+						<a href="">
 <%
-}
+				if ( submenuUrl != null && submenuUrl.length() > 0 ){
 %>
-							<a href=""><li class="child-list">兴趣课</li></a>
-								<a href=""><li class="child-list indent-2">画画</li></a>
-								<a href=""><li class="child-list indent-2">羽毛球</li></a>
-								<a href=""><li class="child-list indent-2">篮球</li></a>
-								<a href=""><li class="child-list indent-2">排球</li></a>
-								<a href=""><li class="child-list indent-2">跳舞</li></a>
-								<a href=""><li class="child-list indent-2">桥牌</li></a>
-								<a href=""><li class="child-list indent-2">机器人</li></a>
+							<li onclick='load_page("<%=submenuUrl%>"); return false;' class="child-list">
+<%
+				} else {
+%>
+							<li onclick='close_menu("<%=submenuName%>"); return false;' class="child-list">
+<%
+				}
+%>
+							<%=p.getProperty(submenuName + ".title")%></li></href>
+		
+<%
+				String subsubmenu 	= p.getProperty(submenuName + ".submenu");
+				if ( subsubmenu != null && subsubmenu.length() > 0 ){
+%>
+							<div id="<%=submenuName%>">
+		<script>
+			init_menu("<%=submenuName%>", "none");
+		</script>
+
+<%
+					String[] subsubmenuList = subsubmenu.split("\\|");
+					for (String subsubmenuItem : subsubmenuList){
+						String subsubmenuName	= submenuName + "." + subsubmenuItem;
+						String subsubmenuUrl 	= p.getProperty(subsubmenuName + ".url");
+%>
+						<a href=""><li onclick='load_page("<%=subsubmenuUrl%>"); return false;' class="child-list indent-2"></href>
+						<%=p.getProperty(subsubmenuName + ".title")%></li>
+<%
+					}
+%>
+							</div>
+<%
+				}
+			}
+%>
 						</div>
-					<a href=""><li class="">成人</li></a>
-						<a href=""><li class="child-list">羽毛球</li></a>
-						<a href=""><li class="child-list">篮球</li></a>
-						<a href=""><li class="child-list">排球</li></a>
-						<a href=""><li class="child-list">跳舞</li></a>
+<%
+		}
+	}
+%>
 
 				</ul>
 			</div>
@@ -85,7 +137,7 @@
 			</div>
 		</div>
 		<div id="footer">
-			<p>&#169;2017 • Created by Jenny Lei</p>
+			<p>&#169;2017 • <%=p.getProperty("copyright")%></p>
 		</div>
 	</body>
 </html>

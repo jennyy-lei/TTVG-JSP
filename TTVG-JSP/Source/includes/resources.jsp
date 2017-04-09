@@ -3,8 +3,8 @@
 <%@page import="java.io.InputStreamReader" %>
 <%@page import="java.util.Properties" %>
 <%--=getServletContext().getRealPath("/includes/resources_cn.properties")--%>
-
 <%
+	////////////Get and Set cookie for the locale.
 	String localeStr = "cn";
 
 	Cookie[] cookies = request.getCookies();
@@ -31,20 +31,15 @@
    
 	// Add the cookie in the response header.
 	response.addCookie( locale );
-%>
 
-<%
-
+	////////////Load property file
 	String propFile = "/includes/resources_" + newLocaleStr + ".properties";
-	//Load property file
 	FileInputStream fis = new FileInputStream(new File(getServletContext().getRealPath(propFile)));
-	InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 
 	Properties p = new Properties();
 	p.load(fis);
 
+	fis.close();
 %>
-<br/>
-<%=localeStr%>/<%=p.getProperty("title")%>/<%=request.getParameter("btnLanguage")%>
-<br/>
+<%--=localeStr%>/<%=p.getProperty("title")%>/<%=request.getParameter("btnLanguage")--%>
 <%--=propFile--%>
