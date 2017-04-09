@@ -11,16 +11,20 @@
 
 	for(Cookie c : cookies) { 
 		if (c.getName().equals("locale")) {
-			localeStr = c.getValue();
+			if ( "cn".equalsIgnoreCase(c.getValue()) || "en".equalsIgnoreCase(c.getValue()))
+				localeStr = c.getValue();
 			break;
 		}
 	}  
 
-	localeStr = localeStr.equalsIgnoreCase("cn") ? "en" : "cn";
-//	localeStr = "cn";
+	String newLocaleStr = localeStr;
+    if(request.getParameter("btnLanguage")!=null)
+	{
+		newLocaleStr = request.getParameter("btnLanguage");
+	}
 	
 	// Create cookies for locale.      
-	Cookie locale = new Cookie("locale", localeStr);
+	Cookie locale = new Cookie("locale", newLocaleStr);
 
 	// Set expiry date after 24 Hrs for the cookies.
 	locale.setMaxAge(60*60*24); 
@@ -31,7 +35,7 @@
 
 <%
 
-	String propFile = "/includes/resources_" + localeStr + ".properties";
+	String propFile = "/includes/resources_" + newLocaleStr + ".properties";
 	//Load property file
 	FileInputStream fis = new FileInputStream(new File(getServletContext().getRealPath(propFile)));
 	InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
@@ -39,11 +43,8 @@
 	Properties p = new Properties();
 	p.load(fis);
 
-//    InputStream stream = application.getResourceAsStream(new File("/resources.properties"));
-//    Properties props = new Properties();
-//    props.load(stream);
 %>
 <br/>
-<%--=localeStr%>/<%=p.getProperty("title")--%>
+<%=localeStr%>/<%=p.getProperty("title")%>/<%=request.getParameter("btnLanguage")%>
 <br/>
 <%--=propFile--%>
