@@ -1,7 +1,8 @@
 <%@page import="java.io.FileInputStream" %>
 <%@page import="java.io.File" %>
+<%@page import="java.io.InputStreamReader" %>
 <%@page import="java.util.Properties" %>
-<%=getServletContext().getRealPath("/resources_cn.properties")%>
+<%--=getServletContext().getRealPath("/includes/resources_cn.properties")--%>
 
 <%
 	String localeStr = "cn";
@@ -16,6 +17,7 @@
 	}  
 
 	localeStr = localeStr.equalsIgnoreCase("cn") ? "en" : "cn";
+//	localeStr = "cn";
 	
 	// Create cookies for locale.      
 	Cookie locale = new Cookie("locale", localeStr);
@@ -29,9 +31,10 @@
 
 <%
 
-	String propFile = "/resources_" + localeStr + ".properties";
+	String propFile = "/includes/resources_" + localeStr + ".properties";
 	//Load property file
-	FileInputStream fis = new FileInputStream(new File(getServletContext().getRealPath("/resources.properties")));
+	FileInputStream fis = new FileInputStream(new File(getServletContext().getRealPath(propFile)));
+	InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 
 	Properties p = new Properties();
 	p.load(fis);
@@ -41,6 +44,6 @@
 //    props.load(stream);
 %>
 <br/>
-<%=p.getProperty("something")%>
+<%--=localeStr%>/<%=p.getProperty("title")--%>
 <br/>
-<%=propFile%>
+<%--=propFile--%>
