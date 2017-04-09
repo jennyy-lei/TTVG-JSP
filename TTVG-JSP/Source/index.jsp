@@ -64,11 +64,11 @@
 <%
 		if ( menuUrl != null && menuUrl.length() >= 0 ){
 %>
-					<li onclick='load_page("<%=menuUrl%>"); return false;' class="parent-list">
+					<li onclick='load_page("<%=menuUrl%>"); return false;' id="<%=menuName%>.li" class="parent-list link">
 <%
 		} else {
 %>
-					<li onclick='close_menu("<%=menuName%>"); return false;' class="parent-list">
+					<li onclick='close_menu("<%=menuName%>.div"); return false;' id="<%=menuName%>.li" class="parent-list folder">
 <%
 		}
 %>
@@ -78,7 +78,7 @@
 		String submenu 	= p.getProperty(menuName + ".submenu");
 		if ( submenu != null && submenu.length() > 0 ){
 %>
-						<div id="<%=menuName%>">
+						<div id="<%=menuName%>.div">
 
 <%
 			String[] submenuList = submenu.split("\\|");
@@ -90,11 +90,11 @@
 <%
 				if ( submenuUrl != null && submenuUrl.length() > 0 ){
 %>
-							<li onclick='load_page("<%=submenuUrl%>"); return false;' class="child-list">
+							<li onclick='load_page("<%=submenuUrl%>"); return false;' class="child-list link">
 <%
 				} else {
 %>
-							<li onclick='close_menu("<%=submenuName%>"); return false;' class="child-list">
+							<li onclick='close_menu("<%=submenuName%>.div"); return false;' class="child-list folder">
 <%
 				}
 %>
@@ -104,9 +104,9 @@
 				String subsubmenu 	= p.getProperty(submenuName + ".submenu");
 				if ( subsubmenu != null && subsubmenu.length() > 0 ){
 %>
-							<div id="<%=submenuName%>">
+							<div id="<%=submenuName%>.div">
 		<script>
-			init_menu("<%=submenuName%>", "none");
+			init_menu("<%=submenuName%>.div", "none");
 		</script>
 
 <%
@@ -115,7 +115,7 @@
 						String subsubmenuName	= submenuName + "." + subsubmenuItem;
 						String subsubmenuUrl 	= p.getProperty(subsubmenuName + ".url");
 %>
-						<a href=""><li onclick='load_page("<%=subsubmenuUrl%>"); return false;' class="child-list indent-2"></href>
+						<a href=""><li onclick='load_page("<%=subsubmenuUrl%>"); return false;' class="child-list indent-2 link"></href>
 						<%=p.getProperty(subsubmenuName + ".title")%></li>
 <%
 					}
