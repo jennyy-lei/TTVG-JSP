@@ -8,17 +8,23 @@
 		<link rel = "stylesheet" type = "text/css" href = "style.css">
 		<script>
 			function init_menu(item, status) {
-				var div = document.getElementById(item);
+				var div = document.getElementById(item + ".div");
 				div.style.display = status;
 			}	
 			
-			function close_menu(item) {
-				var div = document.getElementById(item);
+			function toggle_menu(item) {
+				var li = document.getElementById(item + ".li");
+				var pos = li.className.lastIndexOf("folder-");
+//				alert("" + li.className );
+
+				var div = document.getElementById(item + ".div");
 //				alert("" + div.style.display);
 				if(div.style.display == "none") {
 					div.style.display = "block";
+					li.className = li.className.substring(0, pos) + "folder-open";
 				} else {
 					div.style.display = "none";
+					li.className = li.className.substring(0, pos) + "folder-close";
 				}
 			}	
 			
@@ -59,54 +65,62 @@
 	for (String menu : menuList){
 		String menuName	= "menu." + menu;
 		String menuUrl 	= p.getProperty(menuName + ".url");
+		String submenu 	= p.getProperty(menuName + ".submenu");
 %>
 					<a href="">
 <%
-		if ( menuUrl != null && menuUrl.length() >= 0 ){
+		String onclickAction = menuUrl != null && menuUrl.length() >= 0 ? "load_page(\"" + menuUrl + "\"); " : "";
+		if ( submenu != null && submenu.length() > 0 ){
+			onclickAction += "toggle_menu(\"" + menuName + "\"); ";
 %>
-					<li onclick='load_page("<%=menuUrl%>"); return false;' id="<%=menuName%>.li" class="parent-list link">
+					<li onclick='<%=onclickAction%>return false;' id="<%=menuName%>.li" class="parent-list folder-close">
 <%
 		} else {
 %>
-					<li onclick='close_menu("<%=menuName%>.div"); return false;' id="<%=menuName%>.li" class="parent-list folder">
+					<li onclick='<%=onclickAction%>return false;' id="<%=menuName%>.li" class="parent-list link">
 <%
 		}
 %>
 					<%=p.getProperty(menuName + ".title")%></li></href>
 		
 <%
-		String submenu 	= p.getProperty(menuName + ".submenu");
 		if ( submenu != null && submenu.length() > 0 ){
 %>
 						<div id="<%=menuName%>.div">
 
+		<script>
+			init_menu("<%=menuName%>", "none");
+		</script>
 <%
 			String[] submenuList = submenu.split("\\|");
 			for (String submenuItem : submenuList){
 				String submenuName	= menuName + "." + submenuItem;
 				String submenuUrl 	= p.getProperty(submenuName + ".url");
+				String subsubmenu 	= p.getProperty(submenuName + ".submenu");
 %>
 						<a href="">
 <%
-				if ( submenuUrl != null && submenuUrl.length() > 0 ){
+				String onclickAction1 = submenuUrl != null && submenuUrl.length() >= 0 ? "load_page(\"" + submenuUrl + "\"); " : "";
+				if ( submenu != null && submenu.length() > 0 ){
+					onclickAction1 += "toggle_menu(\"" + submenuName + "\"); ";
+
 %>
-							<li onclick='load_page("<%=submenuUrl%>"); return false;' class="child-list link">
+							<li onclick='<%=onclickAction1%>return false;' id="<%=submenuName%>.li" class="child-list folder-close">
 <%
 				} else {
 %>
-							<li onclick='close_menu("<%=submenuName%>.div"); return false;' class="child-list folder">
+							<li onclick='<%=onclickAction1%>return false;' id="<%=submenuName%>.li" class="child-list link">
 <%
 				}
 %>
 							<%=p.getProperty(submenuName + ".title")%></li></href>
 		
 <%
-				String subsubmenu 	= p.getProperty(submenuName + ".submenu");
 				if ( subsubmenu != null && subsubmenu.length() > 0 ){
 %>
 							<div id="<%=submenuName%>.div">
 		<script>
-			init_menu("<%=submenuName%>.div", "none");
+			init_menu("<%=submenuName%>", "none");
 		</script>
 
 <%

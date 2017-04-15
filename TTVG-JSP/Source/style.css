@@ -114,8 +114,18 @@ p {
 	content: '•';
 }
 
-#sidebar .folder:before {
+#sidebar .folder-close:before {
+	content: '\25b6';
+	font-size: 0.8em;
+}
+
+#sidebar .folder-open:before {
 	content: '\25bc';
+	font-size: 0.8em;
+}
+
+#sidebar .folder-open {
+	font-weight: bold;
 }
 
 #sidebar .parent-list:before {

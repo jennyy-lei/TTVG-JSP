@@ -9,13 +9,15 @@
 
 	Cookie[] cookies = request.getCookies();
 
-	for(Cookie c : cookies) { 
-		if (c.getName().equals("locale")) {
-			if ( "cn".equalsIgnoreCase(c.getValue()) || "en".equalsIgnoreCase(c.getValue()))
-				localeStr = c.getValue();
-			break;
-		}
-	}  
+	if ( cookies != null ) {
+		for(Cookie c : cookies) { 
+			if (c.getName().equals("locale")) {
+				if ( "cn".equalsIgnoreCase(c.getValue()) || "en".equalsIgnoreCase(c.getValue()))
+					localeStr = c.getValue();
+				break;
+			}
+		}  
+	}
 
 	String newLocaleStr = localeStr;
     if(request.getParameter("btnLanguage")!=null)
