@@ -114,18 +114,8 @@ p {
 	content: '•';
 }
 
-#sidebar .folder-close:before {
-	content: '\25b6';
-	font-size: 0.8em;
-}
-
-#sidebar .folder-open:before {
+#sidebar .folder:before {
 	content: '\25bc';
-	font-size: 0.8em;
-}
-
-#sidebar .folder-open {
-	font-weight: bold;
 }
 
 #sidebar .parent-list:before {
@@ -152,8 +142,32 @@ p {
 /*   PAGE CONTENT   */
 
 #page-content {
-	width: 100%;
+	width: 75%;
 	float: right;
+}
+
+#season-dates {
+	width: 100%;
+}
+
+#season-dates td {
+	padding: 2em 0 1em 0;
+	width: 50%;
+	text-align: center;
+	background-color: rgb(250, 250, 250);
+}
+
+#season-dates p {
+	text-transform: uppercase;
+}
+
+#season-dates ul {
+	padding: 0;
+}
+
+#season-dates li {
+	list-style: none;
+	line-height: 2em;
 }
 
 /*   FOOTER   */

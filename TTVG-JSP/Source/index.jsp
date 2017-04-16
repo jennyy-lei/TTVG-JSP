@@ -53,6 +53,8 @@
 			</div>
 			<div id = "site-menu">
 				<form action="index.jsp" method="POST">
+					<button type="submit" id="btnCreate" name="btnCreate" onclick='load_page("html/createAccount.html"); return false;'><%=p.getProperty("button.createAcc")%></button>
+					<button type="submit" id="btnLogIn" name="btnLogIn" onclick='return false;'><%=p.getProperty("button.login")%></button>
 					<button type="submit" id="btnLanguage" name="btnLanguage" value="<%=newLocaleStr%>" onclick='toggle_language()'><%=p.getProperty("button.language")%></button>
 				</form>
 			</div>
