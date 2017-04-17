@@ -83,7 +83,7 @@
 <%
 		}
 %>
-					<%=p.getProperty(menuName + ".title")%></li></href>
+					<%=p.getProperty(menuName + ".title")%></li></a>
 		
 <%
 		if ( submenu != null && submenu.length() > 0 ){
@@ -115,7 +115,7 @@
 <%
 				}
 %>
-							<%=p.getProperty(submenuName + ".title")%></li></href>
+							<%=p.getProperty(submenuName + ".title")%></li></a>
 		
 <%
 				if ( subsubmenu != null && subsubmenu.length() > 0 ){
@@ -131,8 +131,9 @@
 						String subsubmenuName	= submenuName + "." + subsubmenuItem;
 						String subsubmenuUrl 	= p.getProperty(subsubmenuName + ".url");
 %>
-						<a href=""><li onclick='load_page("<%=subsubmenuUrl%>"); return false;' class="child-list indent-2 link"></href>
+						<a href=""><li onclick='load_page("<%=subsubmenuUrl%>"); return false;' class="child-list indent-2 link">
 						<%=p.getProperty(subsubmenuName + ".title")%></li>
+						</a>
 <%
 					}
 %>

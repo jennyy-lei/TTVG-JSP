@@ -77,10 +77,19 @@ p {
 	color: black;
 }
 
+/*   Body Content   */
+
+#body-container {
+	width: 100%;
+	height: 75%;
+}
+
 /*   SIDEBAR   */
 #sidebar {
 	width: 25%;
+	height: 100%;
 	float: left;
+	overflow: hidden;
 }
 
 #sidebar ul {
@@ -152,8 +161,10 @@ p {
 /*   PAGE CONTENT   */
 
 #page-content {
-	width: 100%;
+	width: 75%;
+	height: 100%;
 	float: right;
+	overflow: hidden;
 }
 
 /*   FOOTER   */
