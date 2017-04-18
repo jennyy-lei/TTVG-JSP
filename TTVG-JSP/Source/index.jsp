@@ -5,7 +5,7 @@
 
 <html>
 	<head>
-		<link rel = "stylesheet" type = "text/css" href = "style.css">
+		<link rel = "stylesheet" type = "text/css" href = "html/style.css">
 		<script>
 			function init_menu(item, status) {
 				var div = document.getElementById(item + ".div");
@@ -29,7 +29,7 @@
 			}	
 			
 			function load_page(page) {
-				document.getElementById("page-content").innerHTML='<object type="text/html" data="' + page + '"></object>';
+				document.getElementById("page-content").innerHTML='<object type="text/html" id="page-object" data="' + page + '"></object>';
 			}
 			
 			function toggle_language() {
@@ -45,7 +45,7 @@
 		<!-- Chinese character set -->
 		<meta charset="utf-8">
 	</head>
-	<body onload='load_page("home.html")'>
+	<body onload='load_page("html/home.html")'>
 		<div id = "header">
 			<div id = "site-title">
 				<h1>TTVG</h1>
@@ -53,7 +53,7 @@
 			</div>
 			<div id = "site-menu">
 				<form action="index.jsp" method="POST">
-					<button type="submit" id="btnCreate" name="btnCreate" onclick='load_page("html/createAccount.html"); return false;'><%=p.getProperty("button.createAcc")%></button>
+					<button type="submit" id="btnCreate" name="btnCreate" onclick='load_page("jsp/createAccount.jsp?btnLanguage=<%=newLocaleStr%>"); return false;'><%=p.getProperty("button.createAcc")%></button>
 					<button type="submit" id="btnLogIn" name="btnLogIn" onclick='return false;'><%=p.getProperty("button.login")%></button>
 					<button type="submit" id="btnLanguage" name="btnLanguage" value="<%=newLocaleStr%>" onclick='toggle_language()'><%=p.getProperty("button.language")%></button>
 				</form>
