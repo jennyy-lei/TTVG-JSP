@@ -13,6 +13,7 @@
 					<table style="width:100%">
 						<tr><td align="right"><%=p.getProperty("createAccount.sn")%>:</td><td><input type="text" name="firstName"></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.gn")%>:</td><td><input type="text" name="lastName"></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.alias")%>:</td><td><input type="text" name="alias"></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.tel")%>:</td><td><input type="telephone" name="phoneNumber"></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.email")%>:</td><td><input type="email" name="email"></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.pwd")%>:</td><td><input type="password" name="password"></td></tr>
