@@ -29,7 +29,7 @@
 			}	
 			
 			function load_page(page) {
-				document.getElementById("page-content").innerHTML='<object type="text/html" id="page-object" data="' + page + '"></object>';
+				document.getElementById("page-content").innerHTML='<object type="text/html" id="page-object" data="' + page + '?btnLanguage=<%=newLocaleStr%>"></object>';
 			}
 			
 			function toggle_language() {
