@@ -2,7 +2,7 @@
 	padding: 10px;
 	border-bottom: solid 1px lightgrey;
 	letter-spacing: 1px;
-	line-height: 1.5em;
+	line-height: 1.2em;
 	cursor: pointer;
 	transition: 0.5s;
 }
@@ -13,8 +13,8 @@
 
 .user-photo {
 	background-color: black;
-	height: 50px;
-	width: 50px;
+	height: 40px;
+	width: 40px;
 	border-radius: 50%;
 	vertical-align: middle;
 	margin-right: 15px;
@@ -24,6 +24,8 @@
 .forum-text p {
 	padding: 10px 5px;
 	padding-right: 50px;
+	font-size: 0.75em;
+	line-height: 1.0em;
 }
 
 .comment-count {

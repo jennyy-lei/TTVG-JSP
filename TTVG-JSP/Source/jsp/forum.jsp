@@ -13,7 +13,7 @@
 	item1.setPhoto("folder_home.png");
 	item1.setTitle("Forum Title One");
 	item1.setTime("04/17/2017 06:58:16");
-	item1.setContent("Content One: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor.");
+	item1.setContent("Content One: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor.");
 	items.addChild(item1);
 	ForumItem item2 = new ForumItem();
 	item2.setUser("User Name Two");
