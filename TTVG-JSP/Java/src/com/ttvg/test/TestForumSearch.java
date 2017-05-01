@@ -1,7 +1,6 @@
 package com.ttvg.test;
 
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -10,7 +9,6 @@ import org.hibernate.Transaction;
 import com.ttvg.shared.engine.database.MyDatabaseFeactory;
 import com.ttvg.shared.engine.database.TableRecordOperation;
 import com.ttvg.shared.engine.database.table.Forum;
-import com.ttvg.shared.engine.database.table.Person;
 
 public class TestForumSearch{
   public static void main(String[] args) {

@@ -22,7 +22,7 @@ public class Account{
 		this.id = id;
 	}
 	 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId")
     protected Account person;
     public Account getPerson() {

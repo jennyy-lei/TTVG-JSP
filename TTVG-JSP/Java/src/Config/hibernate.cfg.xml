@@ -32,6 +32,7 @@
 		<mapping class="com.ttvg.shared.engine.database.table.Account"/>
 		<mapping class="com.ttvg.shared.engine.database.table.Person"/>
 		<mapping class="com.ttvg.shared.engine.database.table.Forum"/>
+		<mapping class="com.ttvg.shared.engine.database.table.Event"/>
 		
     </session-factory>
 </hibernate-configuration>

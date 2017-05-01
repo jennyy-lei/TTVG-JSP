@@ -26,7 +26,7 @@ public class Forum{
 		this.id = id;
 	}
 	 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId")
     protected Person person;
     public Person getPerson() {
@@ -74,6 +74,7 @@ public class Forum{
 		this.content = content;
 	}
 	
+	@Column(name = "DateTime")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateTime;
     public Date getDateTime() {

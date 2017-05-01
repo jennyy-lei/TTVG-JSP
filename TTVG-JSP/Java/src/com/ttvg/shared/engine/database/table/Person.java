@@ -1,5 +1,7 @@
 package com.ttvg.shared.engine.database.table;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -22,17 +24,17 @@ public class Person{
 		this.id = id;
 	}
 	 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "FatherId")
     protected Person father;
-    public Person getParent() {
+    public Person getFather() {
         return father;
     }
-	public void setParent( Person father ) {
+	public void setFather( Person father ) {
 		this.father = father;
 	}
 	 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "MotherId")
     protected Person mother;
     public Person getMother() {
@@ -42,7 +44,7 @@ public class Person{
 		this.mother = mother;
 	}
 	 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "GuardianId")
     protected Person guardian;
     public Person getGuardian() {
@@ -50,6 +52,21 @@ public class Person{
     }
 	public void setGuardian( Person guardian ) {
 		this.guardian = guardian;
+	}
+
+	 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "person_event_link",
+            joinColumns = @JoinColumn(name = "PersonId"),
+            inverseJoinColumns = @JoinColumn(name = "EventId")
+    )
+    protected Set<Event> events;
+	public Set<Event> getEvents() {
+		return events;
+	}
+	public void setEvents(Set<Event> events) {
+		this.events = events;
 	}
 
 	@Column(name = "GivenName")

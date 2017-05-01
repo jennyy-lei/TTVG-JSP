@@ -2,12 +2,14 @@ package com.ttvg.test;
 
 
 import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.ttvg.shared.engine.database.MyDatabaseFeactory;
 import com.ttvg.shared.engine.database.TableRecordOperation;
+import com.ttvg.shared.engine.database.table.Event;
 import com.ttvg.shared.engine.database.table.Forum;
 import com.ttvg.shared.engine.database.table.Person;
 
@@ -22,6 +24,14 @@ public class TestForumInsert{
         
         Person person = TableRecordOperation.getRecord(1, Person.class);
         
+        System.out.println("Found Person: GivenName: " + person.getGivenName());
+        Set<Event> events = person.getEvents();
+        if ( events.size() > 0 ){
+        	System.out.println("Found Person Events: " + person.getEvents().size());
+        	for (Event event : events)
+        		System.out.println("Found Person Event title: " + event.getTitle());
+        }
+
         //Create new instance of Person and set values in it by reading them from form object
     	System.out.println("Inserting Record");
     	Forum item = new Forum();
