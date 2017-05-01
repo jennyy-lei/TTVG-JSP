@@ -23,15 +23,34 @@ public class Person{
 	}
 	 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ParentId")
-    protected Person parent;
-    public Person Parent() {
-        return parent;
+    @JoinColumn(name = "FatherId")
+    protected Person father;
+    public Person getParent() {
+        return father;
     }
- 
-    public void setAuthor(Person parent) {
-        this.parent = parent;
+	public void setParent( Person father ) {
+		this.father = father;
+	}
+	 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MotherId")
+    protected Person mother;
+    public Person getMother() {
+        return mother;
     }
+	public void setMother( Person mother ) {
+		this.mother = mother;
+	}
+	 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "GuardianId")
+    protected Person guardian;
+    public Person getGuardian() {
+        return guardian;
+    }
+	public void setGuardian( Person guardian ) {
+		this.guardian = guardian;
+	}
 
 	@Column(name = "GivenName")
 	protected String givenName;

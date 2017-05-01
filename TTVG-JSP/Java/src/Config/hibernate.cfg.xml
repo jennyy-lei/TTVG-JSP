@@ -29,7 +29,9 @@
 		<!--property name="hbm2ddl.auto">create</property-->
 
 		<!-- Names the annotated entity class-->
+		<mapping class="com.ttvg.shared.engine.database.table.Account"/>
 		<mapping class="com.ttvg.shared.engine.database.table.Person"/>
+		<mapping class="com.ttvg.shared.engine.database.table.Forum"/>
 		
     </session-factory>
 </hibernate-configuration>

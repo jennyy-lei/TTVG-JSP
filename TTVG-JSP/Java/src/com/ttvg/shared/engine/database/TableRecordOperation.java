@@ -1,14 +1,48 @@
 package com.ttvg.shared.engine.database;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
 
 public class TableRecordOperation {
 	
+	/**
+	 * Fetch the get a record from DB by the Hibernate SQL
+	 * 
+	 * @param id A Hibernate entry ID
+	 * @return 
+	 * @return A record, null if not found
+	 */
+	public static synchronized <T> T getRecord(int id, Class<T> cls) throws Exception {
+		
+		T ret = null;
+		
+		Session session = null;
+		
+		try{ 
+			session = MyDatabaseFeactory.getSession();
+
+			ret =  session.load(cls, id);
+            Hibernate.initialize(ret);
+
+	    }catch(Exception e){
+	    	throw e;
+	    }finally{
+	      // Actual contact insertion will happen at this step
+	    	if (session != null) {
+	    		session.close();
+	    	}
+	    }
+	    
+	    return ret;
+		
+	}
+		
 	/**
 	 * Fetch the first met record from DB by the Hibernate SQL
 	 * 
@@ -33,8 +67,7 @@ public class TableRecordOperation {
 	        }
 
 	    }catch(Exception e){
-	    	System.out.println(e.getMessage());
-	    	ret = null;
+	    	throw e;
 	    }finally{
 	      // Actual contact insertion will happen at this step
 	    	if (session != null) {
@@ -52,8 +85,8 @@ public class TableRecordOperation {
 	 * @param h_sql A Hibernate SQL statement
 	 * @return Collection of records
 	 */
-	public static synchronized Vector<Object> findAllRecord(String h_sql) throws Exception {
-		Vector<Object> ret = new Vector<Object>();
+	public static synchronized List<Object> findAllRecord(String h_sql) throws Exception {
+		List<Object> ret = new ArrayList<Object>();
 		
 		Session session = null;
 		
@@ -68,7 +101,7 @@ public class TableRecordOperation {
 				ret.add(obj);
 			}
 	    }catch(Exception e){
-	    	System.out.println(e.getMessage());
+	    	throw e;
 	    }finally{
 	      // Actual contact insertion will happen at this step
 	    	if (session != null) {
@@ -99,8 +132,7 @@ public class TableRecordOperation {
 			
 			session.save(obj);
 	    }catch(Exception e){
-	    	System.out.println(e.getMessage());
-	    	ret = false;
+	    	throw e;
 	    }finally{
 	      // Actual contact insertion will happen at this step
 	    	if (session != null) {
@@ -132,8 +164,7 @@ public class TableRecordOperation {
 			
 			session.update(obj);
 	    }catch(Exception e){
-	    	System.out.println(e.getMessage());
-	    	ret = false;
+	    	throw e;
 	    }finally{
 	      // Actual contact insertion will happen at this step
 	    	if (session != null) {
