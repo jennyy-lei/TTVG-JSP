@@ -96,6 +96,15 @@ public class Person{
 		this.middleName = middleName;
 	}
 
+	@Column(name = "Image")
+	protected String image;
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Column(name = "Phone")
 	protected String phone;
 	public String getPhone() {

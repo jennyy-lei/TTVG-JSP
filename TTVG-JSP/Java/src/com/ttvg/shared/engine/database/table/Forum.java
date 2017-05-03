@@ -83,5 +83,14 @@ public class Forum{
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
+	
+	@Column(name = "Priority")
+	protected int priority;
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 
 }

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS person ( Id int unsigned not null, FatherId int, Moth
 CREATE TABLE IF NOT EXISTS account ( Id int unsigned not null, PersonId int unsigned not null, Email char(128) binary DEFAULT '' NOT NULL, Password char(128) binary DEFAULT '' NOT NULL, PRIMARY KEY Id (Id), FOREIGN KEY (PersonId) REFERENCES person (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
 
 -- Define all forum items and link to the person
-CREATE TABLE IF NOT EXISTS forum ( Id int unsigned not null, PersonId int unsigned not null, DateTime DATETIME not null, ForumId int unsigned, Title char(128) binary DEFAULT '', Content text BINARY DEFAULT '', PRIMARY KEY Id (Id), FOREIGN KEY (PersonId) REFERENCES person (Id), FOREIGN KEY (ForumId) REFERENCES forum (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
+CREATE TABLE IF NOT EXISTS forum ( Id int unsigned not null, PersonId int unsigned not null, DateTime DATETIME not null, ForumId int unsigned, Title char(128) binary DEFAULT '', Content text BINARY DEFAULT '', Priority int unsigned, PRIMARY KEY Id (Id), FOREIGN KEY (PersonId) REFERENCES person (Id), FOREIGN KEY (ForumId) REFERENCES forum (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
 
 -- Define all event items
 CREATE TABLE IF NOT EXISTS event ( Id int unsigned not null, FromDate DATE, ToDate DATE, Title char(128) binary DEFAULT '', Content text BINARY DEFAULT '', PRIMARY KEY Id (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';

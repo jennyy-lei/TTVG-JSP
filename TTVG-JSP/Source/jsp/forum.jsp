@@ -1,5 +1,9 @@
-<%@page import="com.ttvg.forum.ForumCollection" %>
-<%@page import="com.ttvg.forum.ForumItem" %>
+<%@page import="java.util.List" %>
+<%@page import="org.hibernate.Session" %>
+<%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
+<%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
+<%@page import="com.ttvg.shared.engine.database.table.Forum" %>
+<%@page import="com.ttvg.shared.engine.database.table.Person" %>
 
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -7,21 +11,24 @@
 <%@include file="../includes/resources.jsp" %>
 
 <%
-	ForumCollection items = new ForumCollection();
-	ForumItem item1 = new ForumItem();
-	item1.setUser("User Name One");
-	item1.setPhoto("folder_home.png");
-	item1.setTitle("Forum Title One");
-	item1.setTime("04/17/2017 06:58:16");
-	item1.setContent("Content One: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor.");
-	items.addChild(item1);
-	ForumItem item2 = new ForumItem();
-	item2.setUser("User Name Two");
-	item2.setPhoto("www.png");
-	item2.setTitle("Forum Title Two");
-	item2.setTime("04/17/2017 06:58:16");
-	item2.setContent(p.getProperty("title") + " Content Two: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a dui faucibus, feugiat quam vel, interdum tortor.");
-	items.addChild(item2);
+    Session dbSession = null;
+	List<Object> forumList = null;
+
+    try{
+      // This step will read hibernate.cfg.xml and prepare hibernate for use
+    	dbSession = MyDatabaseFeactory.getSession();
+        
+        forumList = TableRecordOperation.findAllRecord("from Forum where ForumId is null order by DateTime desc");
+        
+    }catch(Exception e){
+		System.out.println(e.getMessage());
+    }finally{
+      // Close the session after work
+    	if (dbSession != null) {
+    		dbSession.flush();
+    		dbSession.close();
+    	}
+	}
 %>
 
 <html>
@@ -37,19 +44,27 @@
 				<button type="button" id="btn-new-forum">Forum Title</button>
 			</div>
 <%
-	for (ForumItem item : items.getChildren()){
+	if ( forumList != null ){
+		for ( Object obj : forumList ){
+			Forum item = ((Forum)obj);
+			Person person = item.getPerson();
 %>
 			<div class="forum-item-container">
 				<div class="title">
-					<img src="../images/<%=item.getPhoto()%>" class="user-photo">
-					<span><a href=""><%=item.getTitle()%></a>&nbsp;&nbsp;<small>(<%=item.getContent().length()%> <%=p.getProperty("forum.bytes")%>)&nbsp;&nbsp;<em>--<%=item.getUser()%>--</em>&nbsp;&nbsp;<%=item.getTime()%></small></span>
+					<img src="../images/<%=person.getImage()%>" class="user-photo">
+					<span><a href=""><%=item.getTitle()%></a>&nbsp;&nbsp;<small>(<%=item.getContent().length()%> <%=p.getProperty("forum.bytes")%>)&nbsp;&nbsp;<em>--<%=person.getLastName()%>, <%=person.getGivenName()%>--</em>&nbsp;&nbsp;<%=item.getDateTime()%></small></span>
 				</div>
 				<div class="forum-text">
 					<p><%=item.getContent()%> 
 					</p>
-					<p class="comment-count"><a href=""><%=item.getChildren().size()%> <%=p.getProperty("forum.comments")%></a></p>
+					<p class="comment-count"><a href=""><%=item.getFollowingForums().size()%> <%=p.getProperty("forum.comments")%></a></p>
 				</div>
 			</div>
+<%
+		}
+	} else {
+%>
+Nothing found
 <%
 	}
 %>

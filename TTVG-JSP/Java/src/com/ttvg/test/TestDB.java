@@ -28,7 +28,7 @@ public class TestDB{
     }catch(Exception e){
       System.out.println(e.getMessage());
     }finally{
-      // Actual contact insertion will happen at this step
+        // Close the session after work
     	if (session != null) {
     		session.flush();
     		session.close();
