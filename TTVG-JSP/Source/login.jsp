@@ -9,7 +9,8 @@
 		<div id = "html-content">
 			<h1><%=p.getProperty("login.title")%></h1>
 			<fieldset>
-				<form>
+				<form action="jsp/loginPost.jsp" method="POST">
+					<input type="hidden" name="btnLanguage" value="<%=newLocaleStr%>">
 					<table style="width:100%">
 						<tr><td align="right"><%=p.getProperty("login.email")%>:</td><td><input type="email" name="email"></td></tr>
 						<tr><td align="right"><%=p.getProperty("login.pwd")%>:</td><td><input type="password" name="password"></td></tr>

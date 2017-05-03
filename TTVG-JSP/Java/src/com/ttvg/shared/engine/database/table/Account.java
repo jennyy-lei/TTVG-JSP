@@ -24,21 +24,12 @@ public class Account{
 	 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "PersonId")
-    protected Account person;
-    public Account getPerson() {
+    protected Person person;
+    public Person getPerson() {
         return person;
     }
-	public void setPerson( Account person ) {
+	public void setPerson( Person person ) {
 		this.person = person;
-	}
-
-	@Column(name = "GivenName")
-	protected String givenName;
-	public String getGivenName() {
-		return givenName;
-	}
-	public void setGivenName( String givenName ) {
-		this.givenName = givenName;
 	}
 
 	@Column(name = "Email")
