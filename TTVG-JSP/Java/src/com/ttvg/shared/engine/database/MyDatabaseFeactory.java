@@ -3,6 +3,8 @@
  */
 package com.ttvg.shared.engine.database;
 
+import java.io.File;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,7 +18,7 @@ public class MyDatabaseFeactory {
 	/**
 	 * The default configuration file for DB.
 	 */
-	public static String m_default_db_config_file	= "/config/hibernate.cfg.xml";
+	public static String m_default_db_config_file	= "config/hibernate.cfg.xml";
 	
 	/**
 	 * Store the session factory for the Hibernate database session connection
@@ -41,7 +43,7 @@ public class MyDatabaseFeactory {
 
     	// This step will read hibernate.cfg.xml and prepare hibernate for use
 		if ( m_sessionFactory == null ) {
-	    	Configuration config = new Configuration().configure(config_file);
+	    	Configuration config = new Configuration().configure(new File(config_file));
 	    	m_sessionFactory = config.buildSessionFactory();
 		}
 		
@@ -57,11 +59,19 @@ public class MyDatabaseFeactory {
 	   * 
 	   */
 	public static Session getSession(String config_file) throws Exception{
+	    Session session = null;
 
     	// This step will read hibernate.cfg.xml and prepare hibernate for use
-		getSessionFactory(config_file);
-		
-	    return getSession();
+	    if ( m_sessionFactory == null ){
+	    	getSessionFactory(config_file);
+	    }
+	    
+	    if ( m_sessionFactory != null ){
+	    	session = m_sessionFactory.openSession(); 
+	    } else
+	    	throw new Exception();
+	    
+	    return session;
 	}
 
 	  /**
@@ -72,17 +82,13 @@ public class MyDatabaseFeactory {
 	   * 
 	   */
 	public static Session getSession() throws Exception{
-	    Session session = null;
-
-	    if ( m_sessionFactory == null ){
-	    	getSessionFactory(m_default_db_config_file);
-	    }
 	    
-	    if ( m_sessionFactory != null ){
-	    	session = m_sessionFactory.openSession(); 
-	    } else
-	    	throw new Exception();
-	    
-	    return session;
+		return getSession(getPath());
+		
 	}
+
+	public static String getPath() {
+		return MyDatabaseFeactory.class.getProtectionDomain().getCodeSource().getLocation().getPath() + m_default_db_config_file;
+	}
+
 }

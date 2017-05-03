@@ -64,7 +64,7 @@
 		}
 	} else {
 %>
-Nothing found
+<%=p.getProperty("search.noresult")%>
 <%
 	}
 %>
