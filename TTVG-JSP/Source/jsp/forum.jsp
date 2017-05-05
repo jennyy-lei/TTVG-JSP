@@ -41,14 +41,16 @@
 		if ( (title != null && title.length() > 0) || (content != null && content.length() > 0) ) {
 			Transaction transaction = dbSession.beginTransaction();
 			Forum item = new Forum();
-			if ( user != null )
-				item.setPerson(user);
-			if ( forum != null )
-				item.setForum(forum);
 			item.setDateTime(new Date());
 			item.setTitle(title);
 			item.setContent(content);
-			dbSession.save(item);
+			if ( user != null )
+				item.setPerson(user);
+			if ( forum != null ){
+				item.setForum(forum);
+			}
+			
+			dbSession.save(item);			
 			transaction.commit();
 		}
         

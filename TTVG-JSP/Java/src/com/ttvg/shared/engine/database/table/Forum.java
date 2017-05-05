@@ -46,7 +46,7 @@ public class Forum{
 		this.followingForums = followingForums;
 	}
 	
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ForumId")
     protected Forum forum;
     public Forum getForum() {
