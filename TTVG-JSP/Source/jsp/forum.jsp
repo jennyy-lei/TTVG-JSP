@@ -38,6 +38,7 @@
 			forum = TableRecordOperation.getRecord(Integer.parseInt(forumId), Forum.class);
 		}
 		
+		//Save the posted forum item if not empty
 		if ( (title != null && title.length() > 0) || (content != null && content.length() > 0) ) {
 			Transaction transaction = dbSession.beginTransaction();
 			Forum item = new Forum();
@@ -68,7 +69,7 @@
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
     	dbSession = MyDatabaseFeactory.getSession();
 		
-		//Search for current list of items
+		//Search for current list of forum items
 		String condition = forumId != null && forumId.length() > 0 ? "= '" + forumId + "'" : "is null";
         forumList = TableRecordOperation.findAllRecord("from Forum where ForumId " + condition + " order by DateTime desc");
         
@@ -86,6 +87,27 @@
 <html>
 	<body>
 		<link rel = "stylesheet" type = "text/css" href = "../html/forum.css">
+<%
+	//If the current forum item is not empty
+	if ( forum != null ){
+		Person person = forum.getPerson();
+%>
+		<div id = "page-title">
+			<div class="forum-item-container">
+				<div class="title">
+					<img src="../images/<%=person.getImage()%>" class="user-photo">
+					<span><%=forum.getTitle()%>&nbsp;&nbsp;<small>(<%=forum.getContent().length()%> <%=p.getProperty("forum.bytes")%>)&nbsp;&nbsp;<em>--<%=person.getLastName()%>, <%=person.getGivenName()%>--</em>&nbsp;&nbsp;<%=forum.getDateTime()%></small></span>
+				</div>
+				<div class="forum-text">
+					<p><%=forum.getContent()%> 
+					</p>
+				</div>
+			</div>
+		</div>
+		<hr/>
+<%
+	}
+%>
 		<div id = "page-content">
 			<div style="border-bottom: solid 1px lightgrey;">
 				<div style="float:right; margin-right: 100px;">
@@ -93,21 +115,34 @@
 					<span class="page-index">2</span>
 					<span class="page-index">3</span>
 				</div>
-				<button type="button" id="btn-new-forum">Forum Title</button>
+				<p><center><%=p.getProperty("forum.allfollowup")%></center></p>
 			</div>
 <%
+	//Display the current forum list
 	if ( forumList != null ){
 		for ( Object obj : forumList ){
 			Forum item = ((Forum)obj);
 			Person person = item.getPerson();
+			int size = item.getContent().length();
 %>
 			<div class="forum-item-container">
 				<div class="title">
 					<img src="../images/<%=person.getImage()%>" class="user-photo">
-					<span><a href="forum.jsp?forumId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>"><%=item.getTitle()%></a>&nbsp;&nbsp;<small>(<%=item.getContent().length()%> <%=p.getProperty("forum.bytes")%>)&nbsp;&nbsp;<em>--<%=person.getLastName()%>, <%=person.getGivenName()%>--</em>&nbsp;&nbsp;<%=item.getDateTime()%></small></span>
+					<span><a href="forum.jsp?forumId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>"><%=item.getTitle()%></a>&nbsp;&nbsp;<small>(<%=size%> <%=p.getProperty("forum.bytes")%>)&nbsp;&nbsp;<em>--<%=person.getLastName()%>, <%=person.getGivenName()%>--</em>&nbsp;&nbsp;<%=item.getDateTime()%></small></span>
 				</div>
 				<div class="forum-text">
-					<p><%=item.getContent()%> 
+					<p>
+<%
+			if ( size < 100 ) {
+%>
+						<%=item.getContent()%> 
+<%
+			} else {
+%>
+						<%=item.getContent().substring(0, 100)%>...... 
+<%
+			}
+%>						
 					</p>
 					<p class="comment-count"><a href=""><%=item.getFollowingForums().size()%> <%=p.getProperty("forum.comments")%></a></p>
 				</div>
@@ -122,6 +157,7 @@
 %>
 		</div>
 <%
+	//If the current user is login
 	if ( user != null ){
 %>
 		<hr/>
