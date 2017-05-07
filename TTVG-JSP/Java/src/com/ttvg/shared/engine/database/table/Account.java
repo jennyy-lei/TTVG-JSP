@@ -32,6 +32,15 @@ public class Account{
 		this.person = person;
 	}
 
+	@Column(name = "Role")
+	protected String role;
+	public String getRole() {
+		return role;
+	}
+	public void setRole( String role ) {
+		this.role = role;
+	}
+
 	@Column(name = "Email")
 	protected String email;
 	public String getEmail() {

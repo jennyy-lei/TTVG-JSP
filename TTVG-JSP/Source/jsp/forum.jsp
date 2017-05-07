@@ -17,6 +17,8 @@
 	List<Object> forumList = null;
 	Person user = null;
 	String forumId = null;
+	String title = null;
+	String content = null;
 	Forum forum = null;
 	
     try{
@@ -30,9 +32,14 @@
     	dbSession = MyDatabaseFeactory.getSession();
         
 		//Get Post data
+		request.setCharacterEncoding("UTF-8");
 		forumId = request.getParameter("forumId");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		title = request.getParameter("title");
+		content = request.getParameter("content");
+		if ( title != null && title.length() > 0 )
+			title = new String(title.getBytes("ISO8859_1"), "UTF-8");
+		if ( content != null && content.length() > 0 )
+			content = new String(content.getBytes("ISO8859_1"), "UTF-8");
 		
 		if ( forumId != null && forumId.length() > 0 ) {
 			forum = TableRecordOperation.getRecord(Integer.parseInt(forumId), Forum.class);
@@ -123,7 +130,8 @@
 		for ( Object obj : forumList ){
 			Forum item = ((Forum)obj);
 			Person person = item.getPerson();
-			int size = item.getContent().length();
+			String itemContent = item.getContent();
+			int size = itemContent != null ? itemContent.length() : 0;
 %>
 			<div class="forum-item-container">
 				<div class="title">
@@ -135,11 +143,11 @@
 <%
 			if ( size < 100 ) {
 %>
-						<%=item.getContent()%> 
+						<%=itemContent%> 
 <%
 			} else {
 %>
-						<%=item.getContent().substring(0, 100)%>...... 
+						<%=itemContent.substring(0, 100)%>...... 
 <%
 			}
 %>						

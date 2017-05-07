@@ -96,6 +96,15 @@ public class Person{
 		this.middleName = middleName;
 	}
 
+	@Column(name = "ChineseName")
+	protected String chineseName;
+	public String getChineseName() {
+		return chineseName;
+	}
+	public void setChineseName( String chineseName ) {
+		this.chineseName = chineseName;
+	}
+
 	@Column(name = "Image")
 	protected String image;
 	public String getImage() {
