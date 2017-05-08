@@ -2,17 +2,18 @@
 <%@page import="java.io.File" %>
 <%@page import="java.io.InputStreamReader" %>
 <%@page import="java.util.Properties" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%--=getServletContext().getRealPath("/includes/resources_cn.properties")--%>
 <%
 	////////////Get and Set cookie for the locale.
-	String localeStr = "cn";
+	String localeStr = Constant.LOCALE_CN;
 
 	Cookie[] cookies = request.getCookies();
 
 	if ( cookies != null ) {
 		for(Cookie c : cookies) { 
 			if (c.getName().equals("locale")) {
-				if ( "cn".equalsIgnoreCase(c.getValue()) || "en".equalsIgnoreCase(c.getValue()))
+				if ( Constant.LOCALE_CN.equalsIgnoreCase(c.getValue()) || Constant.LOCALE_EN.equalsIgnoreCase(c.getValue()))
 					localeStr = c.getValue();
 				break;
 			}

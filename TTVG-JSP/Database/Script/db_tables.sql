@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS account ( Id int unsigned not null, PersonId int unsi
 CREATE TABLE IF NOT EXISTS forum ( Id int unsigned not null, PersonId int unsigned not null, DateTime DATETIME not null, ForumId int unsigned, Title char(128) binary DEFAULT '', Content text BINARY DEFAULT '', Priority int unsigned, PRIMARY KEY Id (Id), FOREIGN KEY (PersonId) REFERENCES person (Id), FOREIGN KEY (ForumId) REFERENCES forum (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
 
 -- Define all event items
-CREATE TABLE IF NOT EXISTS event ( Id int unsigned not null, FromDate DATE, ToDate DATE, Title char(128) binary DEFAULT '', Content text BINARY DEFAULT '', PRIMARY KEY Id (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
+CREATE TABLE IF NOT EXISTS event ( Id int unsigned not null, FromDate DATE, ToDate DATE, Title char(128) binary DEFAULT '', EventType char(128) binary DEFAULT '', EventCategory char(128) binary DEFAULT '', Content text BINARY DEFAULT '', DateTime DATETIME not null, PRIMARY KEY Id (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
 
 -- Define the person to event link
 CREATE TABLE IF NOT EXISTS person_event_link ( PersonId int unsigned not null, EventId int unsigned not null, PRIMARY KEY Id (PersonId, EventId), FOREIGN KEY (PersonId) REFERENCES person (Id), FOREIGN KEY (EventId) REFERENCES event (Id) ) engine=MyISAM CHARACTER SET utf8 COLLATE utf8_bin comment='Database privileges';
