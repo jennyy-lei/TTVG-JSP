@@ -14,6 +14,7 @@
 
 <%
     Session dbSession = null;
+	Transaction transaction = null;
 	List<Object> forumList = null;
 	Person user = null;
 	String forumId = null;
@@ -47,7 +48,7 @@
 		
 		//Save the posted forum item if not empty
 		if ( (title != null && title.length() > 0) || (content != null && content.length() > 0) ) {
-			Transaction transaction = dbSession.beginTransaction();
+			transaction = dbSession.beginTransaction();
 			Forum item = new Forum();
 			item.setDateTime(new Date());
 			item.setTitle(title);
@@ -63,6 +64,7 @@
 		}
         
     }catch(Exception e){
+		if ( transaction != null ) transaction.rollback();
 		System.out.println(e.getMessage());
     }finally{
       // Close the session after work
@@ -85,8 +87,11 @@
     }finally{
       // Close the session after work
     	if (dbSession != null) {
-    		dbSession.flush();
-    		dbSession.close();
+		    try{
+				dbSession.flush();
+				dbSession.close();
+			}catch(Exception ex1){
+			}				
     	}
 	}
 %>

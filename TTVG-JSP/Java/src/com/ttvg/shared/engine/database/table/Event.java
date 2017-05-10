@@ -1,6 +1,7 @@
 package com.ttvg.shared.engine.database.table;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -89,5 +90,20 @@ public class Event{
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
+
+	 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "person_event_link",
+            joinColumns = @JoinColumn(name = "PersonId"),
+            inverseJoinColumns = @JoinColumn(name = "EventId")
+    )
+    protected Set<Person> persons;
+	public Set<Person> getPersons() {
+		return persons;
+	}
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
 
 }

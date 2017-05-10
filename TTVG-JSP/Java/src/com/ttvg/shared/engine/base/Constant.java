@@ -12,7 +12,14 @@ public class Constant {
 	public static final String LOCALE_CN					= "cn";
 	public static final String LOCALE_EN					= "en";
 	
-	public static final String DDL_INDEX_LIST				= "ddl.list";
+	public static final String PARAM_ROLE_GUEST				= "guest";
+	public static final String PARAM_ROLE_ADMIN				= "administrator";
+	public static final String PARAM_ROLE_SUPER				= "superuser";
+	public static final String PARAM_ROLE_USER				= "user";
+
+	public static final String PARAM_RELATION_MOTHER		= "mother";
+	public static final String PARAM_RELATION_FATHER		= "father";
+	public static final String PARAM_RELATION_GUARDIAN		= "guardian";
 	
 	public static Map<String, Map<String, String>> ddlListSet = new Hashtable<String, Map<String, String>>();
 	
