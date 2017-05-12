@@ -8,10 +8,12 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.ttvg.shared.engine.base.EntityResolvable;
+
 
 @Entity
 @Table(name = "forum")
-public class Forum{
+public class Forum extends EntityResolvable {
 	public Forum() {}
 	
 	@Id
@@ -91,6 +93,34 @@ public class Forum{
 	}
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	
+	@Column(name = "Created")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date created;
+    public Date getCreatedDateTime() {
+        return created;
+    }
+    public void setCreatedDateTime(Date dateTime) {
+        this.created = dateTime;
+    }
+	
+	@Override
+	public void resolve() throws Exception {
+		// TODO Auto-generated method stub
+		followingForums.size();
+	}
+
+	@Override
+	public void resolve(int limit) throws Exception {
+		// TODO Auto-generated method stub
+		this.resolve();
+		if ( limit != 0 ){
+			int nextLimit = limit > 0 ? limit - 1 : limit;
+			for (Forum item : followingForums){
+				item.resolve(nextLimit);
+			}
+		}
 	}
 
 }

@@ -9,6 +9,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
 
+import com.ttvg.shared.engine.api.EntityResolver;
+
 public class TableRecordOperation {
 	
 	/**
@@ -30,6 +32,9 @@ public class TableRecordOperation {
 			ret =  session.load(cls, id);
             Hibernate.initialize(ret);
 
+            if ( ret instanceof EntityResolver )
+            	((EntityResolver)ret).resolve();
+            
 	    }catch(Exception e){
 	    	throw e;
 	    }finally{
@@ -64,6 +69,9 @@ public class TableRecordOperation {
 	        	ret = it.next();
 	    		if ( ret instanceof HibernateProxy )
 	    			((HibernateProxy)ret).getHibernateLazyInitializer().initialize();
+
+	            if ( ret instanceof EntityResolver )
+	            	((EntityResolver)ret).resolve();
 	        }
 
 	    }catch(Exception e){
@@ -98,6 +106,10 @@ public class TableRecordOperation {
 	    		Object obj = it.next();
 	    		if ( obj instanceof HibernateProxy )
 	    			((HibernateProxy)obj).getHibernateLazyInitializer().initialize();
+
+	            if ( obj instanceof EntityResolver )
+	            	((EntityResolver)obj).resolve();
+	            
 				ret.add(obj);
 			}
 	    }catch(Exception e){

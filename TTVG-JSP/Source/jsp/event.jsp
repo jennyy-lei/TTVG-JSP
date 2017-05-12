@@ -112,6 +112,14 @@
 						<th><%=p.getProperty("event.category")%></th>
 						<th><%=p.getProperty("event.date.from")%></th>
 						<th><%=p.getProperty("event.date.to")%></th>
+<%
+	//If the current user is login
+	if ( user != null ){
+%>
+						<th><%=p.getProperty("event.register")%></th>
+<%
+	}
+%>
 					</tr>
 <%
 		for ( Object obj : eventList ){
@@ -123,6 +131,16 @@
 						<td><%=item.getCategory()%></td>
 						<td><%=item.getFromDate()%></td>
 						<td><%=item.getToDate()%></td>
+<%
+	//If the current user is login
+	if ( user != null ){
+%>
+						<th>
+							<a href="eventRegister.jsp?eventId=<%=item.getId()%>"><%=user.hasEvent(item) ? p.getProperty("event.unregister") : p.getProperty("event.register")%></a>
+						</th>
+<%
+	}
+%>
 					</tr>
 				</table>
 			</div>

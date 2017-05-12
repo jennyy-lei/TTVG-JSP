@@ -7,10 +7,12 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.ttvg.shared.engine.base.EntityResolvable;
+
 
 @Entity
 @Table(name = "event")
-public class Event{
+public class Event extends EntityResolvable{
 	public Event() {}
 	
 	@Id
@@ -90,6 +92,16 @@ public class Event{
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
+	
+	@Column(name = "Created")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date created;
+    public Date getCreatedDateTime() {
+        return created;
+    }
+    public void setCreatedDateTime(Date dateTime) {
+        this.created = dateTime;
+    }
 
 	 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -104,6 +116,12 @@ public class Event{
 	}
 	public void setPersons(Set<Person> persons) {
 		this.persons = persons;
+	}
+	
+	@Override
+	public void resolve() throws Exception {
+		// TODO Auto-generated method stub
+		persons.size();
 	}
 
 }

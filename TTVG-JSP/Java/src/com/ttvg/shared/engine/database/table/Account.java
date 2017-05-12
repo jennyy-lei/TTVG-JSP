@@ -1,5 +1,7 @@
 package com.ttvg.shared.engine.database.table;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -58,4 +60,14 @@ public class Account{
 	public void setPassword( String password ) {
 		this.password = password;
 	}
+	
+	@Column(name = "Created")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date created;
+    public Date getCreatedDateTime() {
+        return created;
+    }
+    public void setCreatedDateTime(Date dateTime) {
+        this.created = dateTime;
+    }
 }

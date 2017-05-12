@@ -1,15 +1,18 @@
 package com.ttvg.shared.engine.database.table;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.ttvg.shared.engine.base.EntityResolvable;
+
 
 @Entity
 @Table(name = "person")
-public class Person{
+public class Person extends EntityResolvable {
 	public Person() {}
 	
 	@Id
@@ -68,7 +71,38 @@ public class Person{
 	public void setEvents(Set<Event> events) {
 		this.events = events;
 	}
+	
+	public boolean hasEvent(Event event) {
+		return event != null && hasEvent(event.getId());
+	}
+	public boolean hasEvent(int eventId) {
+		boolean ret = false;
+		
+		for ( Event item : events ){
+			ret = item.getId() == eventId;
+			if (ret) break; 
+		}
+		
+		return ret;
+	}
 
+	public void removeEvent(Event event) {
+		
+		if ( event != null )
+			removeEvent(event.getId());
+		
+	}
+	public void removeEvent(int eventId) {
+		
+		for ( Event item : events ){
+			if ( item.getId() == eventId ){
+				events.remove(item);
+				break;
+			}
+		}
+		
+	}
+	
 	@Column(name = "GivenName")
 	protected String givenName;
 	public String getGivenName() {
@@ -139,5 +173,21 @@ public class Person{
 	}
 	public void setAddress( String address ) {
 		this.address = address;
+	}
+	
+	@Column(name = "Created")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date created;
+    public Date getCreatedDateTime() {
+        return created;
+    }
+    public void setCreatedDateTime(Date dateTime) {
+        this.created = dateTime;
+    }
+	
+	@Override
+	public void resolve() throws Exception {
+		// TODO Auto-generated method stub
+		events.size();
 	}
 }
