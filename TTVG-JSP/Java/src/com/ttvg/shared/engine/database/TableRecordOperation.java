@@ -188,5 +188,31 @@ public class TableRecordOperation {
 	    return ret;
 		
 	}
+	
+	/**
+	 * Delete the record to DB by the Hibernate SQL
+	 * 
+	 * @param obj A Hibernate object
+	 * @return Nil
+	 */
+	public static synchronized void deleteRecord(Object obj) throws Exception {
+			
+		Session session = null;
+		
+		try{ 
+			session = MyDatabaseFeactory.getSession();
+			
+			session.delete(obj);
+	    }catch(Exception e){
+	    	throw e;
+	    }finally{
+	      // Actual contact insertion will happen at this step
+	    	if (session != null) {
+	    		session.flush();
+	    		session.close();
+	    	}
+	    }
+		
+	}
 
 }
