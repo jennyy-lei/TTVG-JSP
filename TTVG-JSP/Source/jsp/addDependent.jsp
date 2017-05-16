@@ -44,11 +44,13 @@
 			
 			//Get Get data
 			personId = request.getParameter("personId");
-			if ( personId != null && firstName.length() > 0 ) {
+			if ( personId != null && personId.length() > 0 ) {
 			
 				child = TableRecordOperation.getRecord(Integer.parseInt(personId), Person.class);
-				if ( child != null )
-					dbSession.delete(child);			
+				if ( child != null ) {
+					dbSession.delete(child);
+					isSuccess = true;
+				}
 			
 			} else {
 				//Get Post data

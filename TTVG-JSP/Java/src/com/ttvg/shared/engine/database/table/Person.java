@@ -27,7 +27,7 @@ public class Person extends EntityResolvable {
 		this.id = id;
 	}
 	 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "FatherId")
     protected Person father;
     public Person getFather() {
@@ -37,7 +37,7 @@ public class Person extends EntityResolvable {
 		this.father = father;
 	}
 	 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "MotherId")
     protected Person mother;
     public Person getMother() {
@@ -47,7 +47,7 @@ public class Person extends EntityResolvable {
 		this.mother = mother;
 	}
 	 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "GuardianId")
     protected Person guardian;
     public Person getGuardian() {
